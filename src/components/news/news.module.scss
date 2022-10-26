@@ -1,0 +1,19 @@
+.newsWrap {
+  margin: 1vh 5vw 1vh 5vw;
+}
+.titleWrap {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  width: 100%;
+  color: white;
+  overflow: auto;
+}
+.restInfoWrap {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  width: 100%;
+  color: rgba(255, 255, 255, 0.623);
+  overflow: auto;
+}

@@ -1,8 +1,6 @@
 .container {
   width: 100%;
   background-color: #2d2d34;
-  color: #f1e4e8;
-
   text-align: center;
   margin: 1vh 0 1vh 0;
   border-bottom: #e2dcde8c 1px solid;
@@ -11,6 +9,7 @@
     cursor: pointer;
   }
   & p {
+    color: #f1e4e8;
     font-size: 1.5em;
   }
 }
