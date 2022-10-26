@@ -1,4 +1,24 @@
 .mainContent {
   margin: 1vh 5vw 1vh 5vw;
   border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  overflow: auto;
+}
+.wrapMainPage {
+  display: flex;
+  flex-direction: row;
+}
+.refreshImg {
+  display: block;
+  width: 3vw;
+  cursor: pointer;
+}
+@media (max-width: 900px) {
+  .refreshImg {
+    display: block;
+    width: 6vw;
+    cursor: pointer;
+  }
 }
