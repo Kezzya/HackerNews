@@ -23,12 +23,6 @@ module.exports = {
   stats: {
     colors: true,
   },
-  loaders: [
-    {
-      test: /\.(woff|woff2|eot|ttf|svg)$/,
-      loader: "file-loader",
-      options: { name: "[name].[ext]", outputPath: "fonts/" },
-    },
-  ],
+
   devtool: "source-map",
 };
