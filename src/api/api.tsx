@@ -16,6 +16,7 @@ export const getIdFirstHundredPosts = (
 
 export const getDataFromIdPosts = async (arrIdPosts: IPostsId[]) => {
   const Posts: IPosts = {
+    id: [],
     title: [],
     score: [],
     nickname: [],
@@ -28,7 +29,11 @@ export const getDataFromIdPosts = async (arrIdPosts: IPostsId[]) => {
       Posts.title.push(posts.title);
       Posts.score.push(posts.score);
       Posts.nickname.push(posts.by);
-      Posts.date.push(Date.parse(posts.time).toString());
+      const time = posts.time * 1000;
+      const date = new Date(time);
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+      Posts.date.push(`${hours}:${minutes}`);
     });
   });
   console.log(Posts);
