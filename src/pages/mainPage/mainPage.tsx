@@ -4,15 +4,15 @@ import styles from "./mainPage.module.scss";
 import Loader from "../../components/loader/loader";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fetchIdPosts } from "../../store/reducers/actionCreater";
-
+import { getDataFromIdPosts } from "../../api/api";
 function MainPage(): JSX.Element {
   const { postsId, isLoading, error } = useAppSelector(
     (state) => state.postsIdReducer
   );
-  const { posts } = useAppSelector((state) => state.postsReducer);
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchIdPosts());
+    getDataFromIdPosts(postsId);
   }, []);
 
   return (

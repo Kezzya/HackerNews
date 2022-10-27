@@ -15,8 +15,3 @@ export const fetchIdPosts = () => (dispatch: AppDispatch) => {
     dispatch(postsIdSlice.actions.postsIdFetchingError(e.message));
   }
 };
-
-export const fetchPosts = () => (dispatch: AppDispatch) => {
-  try {
-  } catch (e) {}
-};
