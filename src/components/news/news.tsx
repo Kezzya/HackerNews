@@ -2,7 +2,7 @@ import styles from "./news.module.scss";
 interface Props {
   number: string;
   title: string;
-  rating: string;
+  score: string;
   nickname: string;
   date: string;
   // any props that come into the component
@@ -10,7 +10,7 @@ interface Props {
 export const News = ({
   number,
   title,
-  rating,
+  score,
   nickname,
   date,
 }: Props): JSX.Element => {
@@ -21,7 +21,7 @@ export const News = ({
         <div>{title}</div>
       </div>
       <div className={styles.restInfoWrap}>
-        <div>{rating}</div>
+        <div>{score}</div>
         <div>by {nickname}</div>
         <div> {date}</div>
       </div>

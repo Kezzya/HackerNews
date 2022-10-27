@@ -10,7 +10,7 @@ export const NewsList = ({ children }: Props) => {
       <News
         number={"1"}
         title={store.title}
-        rating={store.rating}
+        score={store.score}
         nickname={store.nickname}
         date={store.date}
       />
@@ -20,7 +20,7 @@ export const NewsList = ({ children }: Props) => {
 
 const store = {
   title: "testTitle",
-  rating: "rating",
+  score: "score",
   nickname: "testNickname",
   date: "testDate",
 };
