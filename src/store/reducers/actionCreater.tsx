@@ -1,17 +1,22 @@
 import { AppDispatch } from "../store";
-import { postSlice } from "./postSlice";
+import { postsIdSlice } from "./postsIdSlice";
 import { getDataAPIJson, getIdFirstHundredPosts } from "../../api/api";
 
-export const fetchPosts = () => (dispatch: AppDispatch) => {
+export const fetchIdPosts = () => (dispatch: AppDispatch) => {
   try {
-    dispatch(postSlice.actions.postsFetching());
+    dispatch(postsIdSlice.actions.postsIdFetching());
     getDataAPIJson(
       "https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty"
     ).then((resultJson) => {
-      let hundredPosts = getIdFirstHundredPosts(resultJson);
-      dispatch(postSlice.actions.postsFetchingSuccess(hundredPosts));
+      let hundredPosts: Array<Number> = getIdFirstHundredPosts(resultJson);
+      dispatch(postsIdSlice.actions.postsIdFetchingSuccess(hundredPosts));
     });
   } catch (e) {
-    dispatch(postSlice.actions.postsFetchingError(e.message));
+    dispatch(postsIdSlice.actions.postsIdFetchingError(e.message));
   }
+};
+
+export const fetchPosts = () => (dispatch: AppDispatch) => {
+  try {
+  } catch (e) {}
 };

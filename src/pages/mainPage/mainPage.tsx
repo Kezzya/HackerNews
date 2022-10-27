@@ -1,22 +1,20 @@
 import { NewsList } from "../../components/newsList/newsList";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import styles from "./mainPage.module.scss";
 import Loader from "../../components/loader/loader";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { postSlice } from "../../store/reducers/postSlice";
-import { fetchPosts } from "../../store/reducers/actionCreater";
+import { fetchIdPosts } from "../../store/reducers/actionCreater";
 
 function MainPage(): JSX.Element {
-  //redux toolkit
-  const { posts, isLoading, error } = useAppSelector(
-    (state) => state.postsReducer
+  const { postsId, isLoading, error } = useAppSelector(
+    (state) => state.postsIdReducer
   );
-  const {} = postSlice.actions;
+  const { posts } = useAppSelector((state) => state.postsReducer);
   const dispatch = useAppDispatch();
-  const [trigger, setTrigger] = useState(false);
   useEffect(() => {
-    dispatch(fetchPosts());
+    dispatch(fetchIdPosts());
   }, []);
+
   return (
     <div className={styles.wrapMainPage}>
       <div className={styles.mainContent}>
@@ -31,10 +29,7 @@ function MainPage(): JSX.Element {
           className={styles.refreshImg}
           alt="refresh-image"
           onClick={() => {
-            setTrigger(!trigger);
-            setTimeout(() => {
-              setTrigger(false);
-            }, 1000);
+            dispatch(fetchIdPosts());
           }}
         />
       )}
@@ -43,27 +38,3 @@ function MainPage(): JSX.Element {
 }
 
 export default MainPage;
-
-const getDataAPIJson = async (url: string): Promise<any> => {
-  const result = await fetch(url);
-  if (result === undefined) {
-    alert("API url is not correct");
-  }
-  const resultJson = await result.json();
-  return resultJson;
-};
-
-const getIdFirstHundredPosts = async (JSONData: Promise<Number[]>) => {
-  let arrayHundredPosts; // GET ARRAY OF FIRST 100 POSTS ID
-  await JSONData.then((e: Array<Number>) => {
-    arrayHundredPosts = e.slice(0, 99);
-  });
-  return arrayHundredPosts;
-};
-
-const Posts = {
-  title: ["testTitle"],
-  score: ["1"],
-  nickname: ["testNickname"],
-  date: ["testDate"],
-};
