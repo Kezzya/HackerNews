@@ -17,6 +17,11 @@
     "isolatedModules": true,
     "watch": true
   },
-  "include": ["**/*.ts", "**/*.tsx", "src/index.tsx"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "src/index.tsx",
+    "src/components/loader/loader.tsx"
+  ],
   "exclude": ["node_modules"]
 }
