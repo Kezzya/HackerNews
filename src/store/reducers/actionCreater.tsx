@@ -1,31 +1,25 @@
 import { AppDispatch } from "../store";
-import { postsIdSlice } from "./postsIdSlice";
 import { postsSlice } from "./postsSlice";
-import { getDataAPIJson, getIdFirstHundredPosts } from "../../api/api";
+import {
+  getDataAPIJson,
+  getIdFirstHundredPosts,
+  getDataFromIdPosts,
+} from "../../api/api";
 
 export const fetchIdPosts = () => (dispatch: AppDispatch) => {
   try {
-    dispatch(postsIdSlice.actions.postsIdFetching());
+    dispatch(postsSlice.actions.postsIdFetching());
     getDataAPIJson(
       "https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty"
-    ).then((resultJson) => {
-      let hundredPosts: Array<Number> = getIdFirstHundredPosts(resultJson);
-      dispatch(postsIdSlice.actions.postsIdFetchingSuccess(hundredPosts));
+    ).then(async (resultJson) => {
+      const hundredPosts: Array<Number> = getIdFirstHundredPosts(resultJson);
+      dispatch(postsSlice.actions.postsIdFetchingSuccess(hundredPosts));
+      dispatch(postsSlice.actions.postsFetchingFromId());
+      let posts = await getDataFromIdPosts(hundredPosts);
+      const newPosts = Object.assign([], posts);
+      dispatch(postsSlice.actions.postsFetchingFromIdSuccess(newPosts));
     });
   } catch (e) {
-    dispatch(postsIdSlice.actions.postsIdFetchingError(e.message));
-  }
-};
-export const fetchPosts = () => (dispatch: AppDispatch) => {
-  try {
-    dispatch(postsSlice.actions.postsFetching());
-    getDataAPIJson(
-      "https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty"
-    ).then((resultJson) => {
-      let hundredPosts: Array<Number> = getIdFirstHundredPosts(resultJson);
-      dispatch(postsIdSlice.actions.postsIdFetchingSuccess(hundredPosts));
-    });
-  } catch (e) {
-    dispatch(postsIdSlice.actions.postsIdFetchingError(e.message));
+    dispatch(postsSlice.actions.postsIdFetchingError(e.message));
   }
 };

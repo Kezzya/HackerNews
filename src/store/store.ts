@@ -1,8 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import postsIdReducer from "./reducers/postsIdSlice";
 import postsReducer from "./reducers/postsSlice";
 const rootReducer = combineReducers({
-  postsIdReducer,
   postsReducer,
 });
 
