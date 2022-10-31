@@ -4,33 +4,32 @@ import { Comment } from "semantic-ui-react";
 import { getSubKids } from "../../store/mainStore";
 import { convertUnixTime, convertToPlain } from "../../utils/utils";
 
-//To convert HTML comments
-export function CommentsKid({ comment, commentId, trigger }) {
+export function CommentsKid({ parentId, comment, kidsId, trigger }) {
   const { subKids } = useAppSelector((state) => state.mainStore);
-  const dispatch = useAppDispatch();
 
-  const GetOnlyParentKids = (kidIds: Array<Number>): Array<Number> =>
-    comment?.kids?.filter((el, i) => el === kidIds[i]);
   useEffect(() => {
-    const arrKids = GetOnlyParentKids(commentId);
-    console.log(subKids[0]);
     if (subKids[0] === undefined) {
       //@ts-ignore
       arrKids?.map((id) => dispatch(getSubKids(id)));
     }
-  }, []);
-  return <Comment.Group>{trigger ? <GenerateKids /> : <></>}</Comment.Group>;
-}
-const GenerateKids = () => {
-  const { isLoading, subKids } = useAppSelector((state) => state.mainStore);
+  }, [comment]);
+
+  const dispatch = useAppDispatch();
+  const GetOnlyParentKids = (kidsId: Array<Number>): Array<Number> =>
+    comment?.kids?.filter((el, i) => el === kidsId[i]);
+  const arrKids = GetOnlyParentKids(kidsId);
+
+  if (comment?.kids.includes(kidsId)) return <></>;
+
   return (
-    <>
-      {isLoading ? (
-        <>Loading...</>
-      ) : (
-        subKids?.map((el, i) => {
+    <Comment.Group>
+      {trigger ? (
+        subKids?.map((el) => {
+          if (el.parent !== parentId) {
+            return <></>;
+          }
           return (
-            <Comment key={i}>
+            <Comment key={el.id}>
               <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" />
               <Comment.Content>
                 <Comment.Author as="a">{el.by}</Comment.Author>
@@ -42,7 +41,9 @@ const GenerateKids = () => {
             </Comment>
           );
         })
+      ) : (
+        <></>
       )}
-    </>
+    </Comment.Group>
   );
-};
+}

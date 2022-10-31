@@ -5,6 +5,7 @@ import {
   getComments,
   getCommentsKid,
   cleanAllComments,
+  cleanStore,
 } from "../../store/mainStore";
 import { convertUnixTime, convertToPlain } from "../../utils/utils";
 import { CommentsKid } from "../commentsKid/commentsKid";
@@ -50,7 +51,11 @@ const Comments = ({ commentId }) => {
           {" "}
           <Button>Back to News</Button>
         </Link>
-        <Button onClick={() => dispatch(cleanAllComments())}>
+        <Button
+          onClick={() => {
+            dispatch(cleanAllComments());
+          }}
+        >
           Reload the comments
         </Button>
       </Header>
@@ -93,17 +98,17 @@ const Comments = ({ commentId }) => {
                       </Comment.Action>
                     </Comment.Actions>
                   </Comment.Content>
+                  {trigger ? (
+                    <CommentsKid
+                      parentId={el.id}
+                      kidsId={el.kids}
+                      comment={el}
+                      trigger={triggerShowKids}
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </Comment>
-                {trigger ? (
-                  <CommentsKid
-                    key={el.id}
-                    commentId={el.kids}
-                    comment={el}
-                    trigger={triggerShowKids}
-                  />
-                ) : (
-                  <></>
-                )}
               </>
             );
           })}
