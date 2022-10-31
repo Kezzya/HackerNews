@@ -1,9 +1,9 @@
 import { News } from "../news/news";
 import styles from "./newsList.module.scss";
-import { useAppDispatch, useAppSelector } from "../../store/store";
+import { useAppSelector } from "../../store/store";
 
 export const NewsList = () => {
-  const { ids, news, isLoading } = useAppSelector((state) => state.mainStore);
+  const { news, isLoading } = useAppSelector((state) => state.mainStore);
 
   return (
     <ul className={styles.wrapUlList}>

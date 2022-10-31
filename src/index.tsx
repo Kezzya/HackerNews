@@ -1,8 +1,6 @@
 import ReactDOM from "react-dom/client";
-//@ts-ignore
 import { Route } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
-
 import Layout from "./components/layout/layout";
 import "semantic-ui-css/semantic.min.css";
 import "./index.scss";

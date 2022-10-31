@@ -1,19 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../store/store";
-import { Comment, Header } from "semantic-ui-react";
-import { getSubKids, getCommentsKid } from "../../store/mainStore";
+import { Comment } from "semantic-ui-react";
+import { getSubKids } from "../../store/mainStore";
 import { ConvertUnixTime } from "../../components/news/news";
 import { convertToPlain } from "../comments/comments";
 //To convert HTML comments
 export function CommentsKid({ comment, commentId, trigger }) {
-  const { isLoading, commentsKid, subKids } = useAppSelector(
-    (state) => state.mainStore
-  );
+  const { subKids } = useAppSelector((state) => state.mainStore);
   const dispatch = useAppDispatch();
 
   const GetOnlyParentKids = (kidIds: Array<Number>): Array<Number> =>
     comment?.kids?.filter((el, i) => el === kidIds[i]);
-  console.log(GetOnlyParentKids(commentId));
   useEffect(() => {
     const arrKids = GetOnlyParentKids(commentId);
     console.log(subKids[0]);
@@ -22,7 +19,6 @@ export function CommentsKid({ comment, commentId, trigger }) {
       arrKids?.map((id) => dispatch(getSubKids(id)));
     }
   }, []);
-  console.log(subKids);
   return <Comment.Group>{trigger ? <GenerateKids /> : <></>}</Comment.Group>;
 }
 const GenerateKids = () => {
