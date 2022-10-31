@@ -1,19 +1,30 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
+//@ts-ignore
+import { Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+
 import Layout from "./components/layout/layout";
 import "semantic-ui-css/semantic.min.css";
 import "./index.scss";
 import MainPage from "./pages/mainPage/mainPage";
 import { Provider } from "react-redux";
-import { setupStore } from "./store/store";
-const store = setupStore();
+import { store } from "./store/store";
+import { NewsPage } from "./pages/newsPage/newsPage";
 const root = ReactDOM.createRoot(document.getElementById("root")!);
+
 root.render(
-  <React.StrictMode>
+  <BrowserRouter>
     <Provider store={store}>
       <Layout>
-        <MainPage />
+        {/*@ts-ignore*/}
+        <Route exact path="/">
+          <MainPage />
+        </Route>
+        {/*@ts-ignore*/}
+        <Route exact path="/news/:id">
+          <NewsPage />
+        </Route>
       </Layout>
     </Provider>
-  </React.StrictMode>
+  </BrowserRouter>
 );
