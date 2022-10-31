@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../store/store";
 import { Comment } from "semantic-ui-react";
 import { getSubKids } from "../../store/mainStore";
-import { ConvertUnixTime } from "../../components/news/news";
-import { convertToPlain } from "../comments/comments";
+import { convertUnixTime, convertToPlain } from "../../utils/utils";
+
 //To convert HTML comments
 export function CommentsKid({ comment, commentId, trigger }) {
   const { subKids } = useAppSelector((state) => state.mainStore);
@@ -35,7 +35,7 @@ const GenerateKids = () => {
               <Comment.Content>
                 <Comment.Author as="a">{el.by}</Comment.Author>
                 <Comment.Metadata>
-                  <div>{ConvertUnixTime(el.time)}</div>
+                  <div>{convertUnixTime(el.time)}</div>
                 </Comment.Metadata>
                 <Comment.Text>{convertToPlain(el.text)}</Comment.Text>
               </Comment.Content>

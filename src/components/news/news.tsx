@@ -1,5 +1,6 @@
 import styles from "./news.module.scss";
 import { Link } from "react-router-dom";
+import { convertUnixTime } from "../../utils/utils";
 interface Props {
   number: string;
   title: string;
@@ -27,20 +28,9 @@ export const News = ({
         <div className={styles.restInfoWrap}>
           <div>{score}</div>
           <div>by {nickname}</div>
-          <div> {`${ConvertUnixTime(Number(date))}`}</div>
+          <div> {`${convertUnixTime(Number(date))}`}</div>
         </div>
       </li>
     </Link>
   );
-};
-
-export const ConvertUnixTime = (unixTime: number): string => {
-  const time = unixTime * 1000;
-  const date = new Date(time);
-  const hours = date.getHours().toString();
-  let minutes = date.getMinutes().toString();
-  if (minutes.length < 2) {
-    minutes = `0${minutes}`;
-  }
-  return `${hours}:${minutes}`;
 };

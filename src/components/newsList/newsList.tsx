@@ -11,23 +11,18 @@ export const NewsList = () => {
         <div>Идёт загрузка...</div>
       ) : (
         <div>
-          {
-            //@ts-ignore
-            news?.map((el, i) => (
-              <News
-                number={`${i}`}
-                title={`${el.title}`}
-                //@ts-ignore
-                score={`score: ${el.score}`}
-                //@ts-ignore
-                nickname={`${el.by}`}
-                //@ts-ignore
-                date={el.time}
-                id={el.id}
-                key={i}
-              />
-            ))
-          }
+          {news?.map((el, i) => (
+            <News
+              number={`${i}`}
+              title={`${el.title}`}
+              score={`score: ${el.score}`}
+              nickname={`${el.by}`}
+              //@ts-ignore
+              date={el.time}
+              id={el.id}
+              key={i}
+            />
+          ))}
         </div>
       )}
     </ul>

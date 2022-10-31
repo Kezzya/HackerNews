@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../store/store";
 import { Comment, Header } from "semantic-ui-react";
-import { getComments, getCommentsKid } from "../../store/mainStore";
-import { ConvertUnixTime } from "../../components/news/news";
+import {
+  getComments,
+  getCommentsKid,
+  cleanAllComments,
+} from "../../store/mainStore";
+import { convertUnixTime, convertToPlain } from "../../utils/utils";
 import { CommentsKid } from "../commentsKid/commentsKid";
 import { Link } from "react-router-dom";
-//To convert HTML comments
-export const convertToPlain = (html) => {
-  var tempDivElement = document.createElement("div");
-  tempDivElement.innerHTML = html;
-  return tempDivElement.textContent || tempDivElement.innerText || "";
-};
+import { Button } from "semantic-ui-react";
 
 const Comments = ({ commentId }) => {
   const [triggerShowKids, setTriggerShowKids] = useState(false);
@@ -20,7 +19,7 @@ const Comments = ({ commentId }) => {
   const dispatch = useAppDispatch();
   const title = comments[0]?.title;
   const url = comments[0]?.url;
-  const date = ConvertUnixTime(comments[0]?.time);
+  const date = convertUnixTime(comments[0]?.time);
   const by = comments[0]?.by;
   const countComments = comments[0]?.descendants;
   useEffect(() => {
@@ -31,7 +30,6 @@ const Comments = ({ commentId }) => {
       //@ts-ignore
       comments[0]?.kids?.map((kid) => dispatch(getCommentsKid(kid)));
     }
-    //@ts-ignore
   }, [comments]);
 
   return (
@@ -50,15 +48,18 @@ const Comments = ({ commentId }) => {
         Number of comments : {countComments}
         <Link to="/">
           {" "}
-          <button style={{ padding: `5px` }}>Back to News</button>
+          <Button>Back to News</Button>
         </Link>
+        <Button onClick={() => dispatch(cleanAllComments())}>
+          Reload the comments
+        </Button>
       </Header>
       {isLoading ? (
         <div>Loading...</div>
       ) : (
         <>
           {commentsKid?.map((el, i) => {
-            const time = ConvertUnixTime(el.time);
+            const time = convertUnixTime(el.time);
             const oldText = el.text;
             const text = convertToPlain(oldText);
             let trigger = false;
