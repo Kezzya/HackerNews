@@ -45,7 +45,7 @@ export function CommentsKid({ parentId, comment, kidsId, trigger }) {
               ) : (
                 <>
                   {el.kids.map((el) => (
-                    <GenerateKids id={el} />
+                    <GenerateKids id={el} key={el.id} />
                   ))}
                 </>
               )}
@@ -91,7 +91,7 @@ const GenerateKids = (el) => {
           <Comment.Text>{convertToPlain(data.text)}</Comment.Text>
         </CommentContent>
       </Comment>
-      {/* {!data.kids ? <>nety</> : <GenerateKids el={data.kids} />} */}
+      {/* {!data.kids ? <>nety</> : <GenerateKids id={...} />} */}
     </CommentGroup>
   );
 };

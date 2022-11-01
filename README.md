@@ -4,7 +4,7 @@
 
 - Главная страница ![image](https://user-images.githubusercontent.com/42649735/199016251-23add4e6-7aa6-49e9-9b50-b26f3f3c13f4.png)
 
-- Страница с комментариями ![image](https://user-images.githubusercontent.com/42649735/199089629-12a58840-918e-4063-9e56-ddc15328c024.png)
+- Страница с комментариями ![image](https://user-images.githubusercontent.com/42649735/199176313-99bdfd26-cb6b-4ebb-bd15-28b323d5f091.png)
 
 ## Технологии
 

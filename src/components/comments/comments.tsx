@@ -72,7 +72,7 @@ const Comments = ({ commentId }) => {
 
             return (
               <>
-                <Comment key={commentsKid.id}>
+                <Comment key={el.id}>
                   <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/joe.jpg" />
                   <Comment.Content>
                     <Comment.Author as="a">{el.by}</Comment.Author>
