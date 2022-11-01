@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../store/store";
-import { Comment } from "semantic-ui-react";
+import { Comment, CommentContent, CommentGroup } from "semantic-ui-react";
 import { getSubKids } from "../../store/mainStore";
 import { convertUnixTime, convertToPlain } from "../../utils/utils";
 
@@ -12,7 +12,7 @@ export function CommentsKid({ parentId, comment, kidsId, trigger }) {
       //@ts-ignore
       arrKids?.map((id) => dispatch(getSubKids(id)));
     }
-  }, [comment]);
+  }, []);
 
   const dispatch = useAppDispatch();
   const GetOnlyParentKids = (kidsId: Array<Number>): Array<Number> =>
@@ -28,6 +28,7 @@ export function CommentsKid({ parentId, comment, kidsId, trigger }) {
           if (el.parent !== parentId) {
             return <></>;
           }
+
           return (
             <Comment key={el.id}>
               <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" />
@@ -38,6 +39,16 @@ export function CommentsKid({ parentId, comment, kidsId, trigger }) {
                 </Comment.Metadata>
                 <Comment.Text>{convertToPlain(el.text)}</Comment.Text>
               </Comment.Content>
+
+              {!el.kids ? (
+                <></>
+              ) : (
+                <>
+                  {el.kids.map((el) => (
+                    <GenerateKids id={el} />
+                  ))}
+                </>
+              )}
             </Comment>
           );
         })
@@ -47,3 +58,40 @@ export function CommentsKid({ parentId, comment, kidsId, trigger }) {
     </Comment.Group>
   );
 }
+const fetchData = async (id) => {
+  const res = await fetch(
+    `https://hacker-news.firebaseio.com/v0/item/${id}.json`
+  );
+  const data = res.json();
+  return data;
+};
+const GenerateKids = (el) => {
+  const [data, setData] = useState({
+    by: "",
+    id: 0,
+    kids: [],
+    parent: 0,
+    time: 0,
+    text: "",
+    type: "",
+  });
+  useEffect(() => {
+    fetchData(el.id).then((el) => setData(el));
+  }, []);
+
+  return (
+    <CommentGroup>
+      <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/matt.jpg" />
+      <Comment>
+        <CommentContent>
+          <Comment.Author as="a">{data?.by}</Comment.Author>
+          <Comment.Metadata>
+            <div>{convertUnixTime(data.time)}</div>
+          </Comment.Metadata>
+          <Comment.Text>{convertToPlain(data.text)}</Comment.Text>
+        </CommentContent>
+      </Comment>
+      {/* {!data.kids ? <>nety</> : <GenerateKids el={data.kids} />} */}
+    </CommentGroup>
+  );
+};

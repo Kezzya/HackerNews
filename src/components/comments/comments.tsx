@@ -5,7 +5,6 @@ import {
   getComments,
   getCommentsKid,
   cleanAllComments,
-  cleanStore,
 } from "../../store/mainStore";
 import { convertUnixTime, convertToPlain } from "../../utils/utils";
 import { CommentsKid } from "../commentsKid/commentsKid";
@@ -73,7 +72,7 @@ const Comments = ({ commentId }) => {
 
             return (
               <>
-                <Comment key={i}>
+                <Comment key={commentsKid.id}>
                   <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/joe.jpg" />
                   <Comment.Content>
                     <Comment.Author as="a">{el.by}</Comment.Author>

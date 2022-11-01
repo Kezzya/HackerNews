@@ -20,7 +20,7 @@ export const NewsList = () => {
               //@ts-ignore
               date={el.time}
               id={el.id}
-              key={i}
+              key={el.id}
             />
           ))}
         </div>
